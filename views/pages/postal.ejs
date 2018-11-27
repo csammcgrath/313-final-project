@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+    <% include ../partials/nav.ejs %>
+
+    <div class="row mt-5">
+        <div class="card text-center mt-5 mx-auto">
+            <div class="card-header">
+                Postal Calculator
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Your results: </h5>
+                <p class="card-text">
+                    <b>Weight:</b>
+                    <%= weight %>
+                </p>
+                <p class="card-text">
+                    <b>Postal type:</b>
+                    <%= type %>
+                </p>
+                <p class="card-text">
+                    <b>Total Price:</b>
+                    $
+                    <%= total %>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
