@@ -16,6 +16,8 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/home.html'
 //SOCKET IO
 // io.on('connection', (socket) => console.log('A user has connected.'));
 
+io.set('transports', ['websocket']);
+
 io.on('connection', (socket) => {
   console.log('An user has connected!');
 

@@ -1,5 +1,7 @@
 $(document).ready(() => {
-    const socket = io();
+    let socket = io.connect(host, {
+        transports: ['websocket']
+    });
 
     $('#chatButton').click((e) => {
         e.preventDefault();
