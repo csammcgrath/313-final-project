@@ -3,36 +3,37 @@ function createUser(req, res) {
 }
 
 function loginUser(req, res, pg, cString) {
-    checkDatabase(req, res, pg, cString, (err, results) => {
-        if (err || results.length < 1) {
-            res.status(500).json({
-                success: true,
+    queryDatabase(req, res, pg, cString, (err, results) => {
+        if (err) {
+            res.json({
+                success: false,
                 data: null
             });
         }
 
-        res.status(200).json({
+        res.json({
             success: true,
             data: results[0]
-        });
-    });
+        })
+    });  
 }
 
-function checkDatabase(req, res, pg, cString, checkDatabaseCallback) {
-    console.log(req.body);
-
-    let username = req.body.user;
-    let password = req.body.pass;
-    let queryStatement = 'SELECT id, username, password FROM users WHERE username = $1::string';
-    let params = [username];
-
-    pg.query(queryStatement, params, (err, results) => {
+function queryDatabase(req, res, pg, cString, callback) {
+    pg.connect(cString, (err, client, done) => {
         if (err) {
-            console.log(`ERROR: ${err}`);
-            checkDatabaseCallback(err);
+            done();
+            console.log('Error with database... Additional info: ', err);
+            callback(err);
         }
 
-        checkDatabaseCallback(null, results.rows);
+        let username = req.body.username;
+        let password = req.body.password;
+        let queryStatement = 'SELECT id, username, password FROM users WHERE username = $1::string';
+        let params = [username];
+
+        let query = client.query(queryStatement, params);
+
+        callback(null, query);
     });
 }
 
