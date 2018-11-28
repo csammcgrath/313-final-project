@@ -25,10 +25,10 @@ function loginUser(req, res, pg, cString) {
             }
 
             console.log(`Results: ${JSON.stringify(results.rows)}`);
+
+            res.json({success: true, results: JSON.stringify(results.rows)});
         });
     });
-
-    res.json({success: true})
 }
 
 module.exports = {
