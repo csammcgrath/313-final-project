@@ -10,6 +10,8 @@ function loginUser(req, res, pool) {
             res.json({success: false});
         }
 
+        if (results.length < 1) res.json({success: true, data: 'none'});
+
         res.json({success: true, data: data[0]})
     });
 }
