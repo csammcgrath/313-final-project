@@ -3,6 +3,7 @@ function createUser(req, res) {
 }
 
 function loginUser(req, res, pool) {
+    console.log(req.body);
     queryDatabase(req, res, pool, (err, data) => {
         if (err) {
             console.log(err);

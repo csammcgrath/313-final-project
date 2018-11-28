@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 
 //ROUTES
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/home.html')));
-app.post('/login-createUser', (req, res) => helpers.loginUser(req, res, pool, connectionString));
+app.post('/login-createUser', (req, res) => helpers.loginUser(req, res, pool));
 
 //
 
