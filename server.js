@@ -4,6 +4,7 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const { Pool } = require('pg');
 
@@ -20,15 +21,20 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: 'tacocat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
 
 //ROUTES
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/home.html')));
 app.post('/login-createUser', (req, res) => helpers.loginUser(req, res, pool));
-
-//
-
 
 //SOCKET IO
 io.on('connection', (socket) => {
