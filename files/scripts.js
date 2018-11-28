@@ -3,7 +3,22 @@ function createUser(req, res) {
 }
 
 function loginUser(req, res, pg, cString) {
-    
+    checkDatabase(req, res, pg, cString, (err, results) => {
+        if (err || results.length < 1) {
+            res.status(500).json({
+                success: true,
+                data: null
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: results[0]
+        });
+    });
+}
+
+function checkDatabase(req, res, pg, cString, checkDatabaseCallback) {
     pg.connect(cString, (err, client, done) => {
         if (err) {
             done();
@@ -21,12 +36,10 @@ function loginUser(req, res, pg, cString) {
         pg.query(queryStatement, params, (err, results) => {
             if (err) {
                 console.log(`ERROR: ${err}`);
-                return null;
+                checkDatabaseCallback(err);
             }
 
-            console.log(`Results: ${JSON.stringify(results.rows)}`);
-
-            res.json({success: true, results: JSON.stringify(results.rows)});
+            checkDatabaseCallback(null, results.rows);
         });
     });
 }
