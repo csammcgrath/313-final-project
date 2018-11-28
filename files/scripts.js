@@ -14,7 +14,7 @@ function loginUser(req, res, pg, cString) {
         res.json({
             success: true,
             data: results[0]
-        })
+        });
     });  
 }
 
@@ -33,6 +33,7 @@ function queryDatabase(req, res, pg, cString, callback) {
 
         let query = client.query(queryStatement, params);
 
+        done();
         callback(null, query);
     });
 }
