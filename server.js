@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const bodyParser = require('body-parser');
 
 const { Pool } = require('pg');
 
@@ -18,6 +19,9 @@ const helpers = require('./files/scripts');
 app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //ROUTES
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/home.html')));
