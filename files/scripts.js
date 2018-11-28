@@ -15,8 +15,8 @@ function loginUser(req, res, pool) {
 }
 
 function queryDatabase(req, res, pool, callback) {
-    let username = req.body.username;
-    let password = req.body.password;
+    let username = req.body.user;
+    let password = req.body.pass;
 
     let query = 'SELECT id, username, password FROM users WHERE username = $1::string';
     let params = [username];
