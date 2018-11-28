@@ -19,8 +19,10 @@ function loginUser(req, res, pg, cString) {
 }
 
 function checkDatabase(req, res, pg, cString, checkDatabaseCallback) {
-    let username = req.body.username;
-    let password = req.body.password;
+    console.log(req.body);
+
+    let username = req.body.user;
+    let password = req.body.pass;
     let queryStatement = 'SELECT id, username, password FROM users WHERE username = $1::string';
     let params = [username];
 
