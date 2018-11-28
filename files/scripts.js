@@ -16,6 +16,10 @@ function loginUser(req, res, pg, cString) {
             data: results[0]
         });
     });  
+
+    res.json({
+        success: 'NEVER'
+    });
 }
 
 function queryDatabase(req, res, pg, cString, callback) {
