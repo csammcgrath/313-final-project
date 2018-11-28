@@ -19,28 +19,18 @@ function loginUser(req, res, pg, cString) {
 }
 
 function checkDatabase(req, res, pg, cString, checkDatabaseCallback) {
-    pg.connect(cString, (err, client, done) => {
+    let username = req.body.username;
+    let password = req.body.password;
+    let queryStatement = 'SELECT id, username, password FROM users WHERE username = $1::string';
+    let params = [username];
+
+    pg.query(queryStatement, params, (err, results) => {
         if (err) {
-            done();
-            console.log('Error with database... Additional info: ', err);
-            return res.status(500).json({
-                success: false
-            });
+            console.log(`ERROR: ${err}`);
+            checkDatabaseCallback(err);
         }
 
-        let username = req.body.username;
-        let password = req.body.password;
-        let queryStatement = 'SELECT id, username, password FROM users WHERE username = $1::string';
-        let params = [username];
-
-        pg.query(queryStatement, params, (err, results) => {
-            if (err) {
-                console.log(`ERROR: ${err}`);
-                checkDatabaseCallback(err);
-            }
-
-            checkDatabaseCallback(null, results.rows);
-        });
+        checkDatabaseCallback(null, results.rows);
     });
 }
 
