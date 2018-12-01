@@ -12,7 +12,10 @@ $(document).ready(() => {
     $('#chatButton').click((e) => {
         e.preventDefault();
 
-        socket.emit('new_message', { message: $('#userInput').val() });
+        socket.emit('new_message', { 
+            message: $('#userInput').val(), 
+            user: $('#usernameWhole').innerText() 
+        });
         $('#userInput').val('');
         $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
         return false;
