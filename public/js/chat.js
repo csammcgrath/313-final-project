@@ -12,14 +12,14 @@ $(document).ready(() => {
     $('#chatButton').click((e) => {
         e.preventDefault();
 
-        console.log($('#usernameWhole').html());
-
-        socket.emit('new_message', { 
+        let obj = {
             message: $('#userInput').val(),
             username: $('#usernameWhole').html()
-        });
+        };
+
+        socket.emit('new_message', obj);
         $('#userInput').val('');
-        $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
+        // $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
         return false;
     });
 
