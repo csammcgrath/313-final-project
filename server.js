@@ -34,8 +34,9 @@ app.use(session({
 
 //ROUTES
 //res.sendFile(path.join(__dirname, '/public/home.html'))
+//res.sendFile(path.join(__dirname, '/public/login.html'))
 app.get('/', (req, res) => res.render('pages/home', { sessionVar: req.session.username }));
-app.get('/login', (req, res) => res.sendFile(path.join(__dirname, '/public/login.html')));
+app.get('/login', (req, res) => helpers.renderLoginLogic(req, res));
 app.get('/login-signOut', (req, res) => helpers.signOutUser(req, res));
 app.post('/login-createUser', (req, res) => helpers.loginUser(req, res, pool));
 

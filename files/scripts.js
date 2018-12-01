@@ -2,16 +2,18 @@ function createUser(req, res) {
 
 }
 
-function loginUser(req, res, pool) {
-    console.log(req.session.username);
+function renderLoginLogic(req, res) {
     if (req.session.username) {
         res.writeHead(302, {
-            'Location': '/'
+            'Location': '/login'
         });
-
         res.end();
+    } else {
+        res.render('pages/login');
     }
+}
 
+function loginUser(req, res, pool) {
     queryDatabase(req, res, pool, (err, data) => {
         if (err) {
             console.log(err);
@@ -100,5 +102,6 @@ function queryDatabase(req, res, pool, callback) {
 module.exports = {
     createUser,
     loginUser,
-    signOutUser
+    signOutUser,
+    renderLoginLogic
 }
