@@ -12,25 +12,22 @@ $(document).ready(() => {
     $('#chatButton').click((e) => {
         e.preventDefault();
 
-        let obj = {
-            message: $('#userInput').val(),
-            username: $('#usernameWhole').html()
-        };
-
-        socket.emit('new_message', obj);
+        socket.emit('new_message', { message: $('#userInput').val() });
         $('#userInput').val('');
         // $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
         return false;
     });
 
     socket.on('new_message', (data) => {
-        console.log('Data: ', data);
+        let username = $('#usernameWhole').html();
+        console.log('Username: ', username)
+
         if (data.message !== '') {
             $('#chatroom').append(`\
                 <li class="left clearfix">\
                     <div class="chat-body clearfix">\
                         <div class="header">\
-                            <b>${$('#usernameWhole').html()}</b><br>\
+                            <b>${username}</b><br>\
                         </div>\
                         <p>\
                             ${data.message}\
