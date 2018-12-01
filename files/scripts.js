@@ -3,6 +3,7 @@ function createUser(req, res) {
 }
 
 function loginUser(req, res, pool) {
+    console.log(req.session.username);
     if (req.session.username) {
         res.writeHead(302, {
             'Location': '/'
