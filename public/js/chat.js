@@ -14,7 +14,7 @@ $(document).ready(() => {
 
         socket.emit('new_message', { 
             message: $('#userInput').val(),
-            username: $('#usernameWhole').innerText()
+            username: $('#usernameWhole').text()
         });
         $('#userInput').val('');
         $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
