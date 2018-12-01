@@ -27,7 +27,7 @@ function loginUser(req, res, pool) {
         console.log('DB stuff: ', dbUser, dbPass);
 
         if (dbUser === user && dbPass === pass) {
-            req.sessions.username = dbUser;
+            // req.sessions.username = dbUser;
             console.log('Successfully logged in!');
 
             res.writeHead(302, {
