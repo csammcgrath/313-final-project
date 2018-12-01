@@ -33,7 +33,8 @@ app.use(session({
 }));
 
 //ROUTES
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/home.html')));
+//res.sendFile(path.join(__dirname, '/public/home.html'))
+app.get('/', (req, res) => res.render('pages/home'));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, '/public/login.html')));
 app.post('/login-createUser', (req, res) => helpers.loginUser(req, res, pool));
 
