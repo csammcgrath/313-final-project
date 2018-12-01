@@ -23,6 +23,9 @@ function loginUser(req, res, pool) {
         let dbUser = data[0].username;
         let dbPass = data[0].password;
 
+        console.log('User stuff', user, pass);
+        console.log('DB stuff: ', dbUser, dbPass);
+
         if (dbUser === user && dbPass === pass) {
             req.sessions.username = dbUser;
             console.log('Successfully logged in!');
