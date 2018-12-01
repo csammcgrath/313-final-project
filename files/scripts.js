@@ -5,7 +5,7 @@ function createUser(req, res) {
 function renderLoginLogic(req, res) {
     if (req.session.username) {
         res.writeHead(302, {
-            'Location': '/login'
+            'Location': '/'
         });
         res.end();
     } else {
