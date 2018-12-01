@@ -22,7 +22,7 @@ $(document).ready(() => {
         let username = $('#usernameWhole').html();
         console.log('Username: ', username)
 
-        if (data.message !== '') {
+        if (data.message !== '' && username) {
             $('#chatroom').append(`\
                 <li class="left clearfix">\
                     <div class="chat-body clearfix">\
