@@ -3,7 +3,14 @@ function createUser(req, res) {
 }
 
 function loginUser(req, res, pool) {
-    console.log(req.body);
+    if (req.session.username) {
+        res.writeHead(302, {
+            'Location': '/'
+        });
+
+        res.end();
+    }
+
     queryDatabase(req, res, pool, (err, data) => {
         if (err) {
             console.log(err);
