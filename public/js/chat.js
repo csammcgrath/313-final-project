@@ -12,6 +12,8 @@ $(document).ready(() => {
     $('#chatButton').click((e) => {
         e.preventDefault();
 
+        console.log($('#usernameWhole').html());
+
         socket.emit('new_message', { 
             message: $('#userInput').val(),
             username: $('#usernameWhole').html()
@@ -22,7 +24,6 @@ $(document).ready(() => {
     });
 
     socket.on('new_message', (data) => {
-        console.log('Data: ', data);
         if (data.message !== '') {
             $('#chatroom').append(`\
                 <li class="left clearfix">\
