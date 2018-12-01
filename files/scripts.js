@@ -11,34 +11,33 @@ function loginUser(req, res, pool) {
         }
 
         if (data.length === 0) {
-            //remove Not found in database portion when project is finished.
-            console.log('Your username or password is incorrect. Please try again. Not found in database...');
+            console.log('Your username or password is incorrect. Please try again.');
             res.writeHead(302, {
                 'Location': '/login'
             });
-            res.end();
-        }
-
-        let user = req.body.user;
-        let pass = req.body.pass;
-        let dbUser = data[0].username;
-        let dbPass = data[0].password;
-
-        if (dbUser === user && dbPass === pass) {
-            req.session.username = dbUser;
-            console.log('Successfully logged in!');
-
-            res.writeHead(302, {
-                'Location': '/'
-            });
-
             res.end();
         } else {
-            console.log('Your username or password is incorrect. Please try again. Incorrect user/pass.');
-            res.writeHead(302, {
-                'Location': '/login'
-            });
-            res.end();
+            let user = req.body.user;
+            let pass = req.body.pass;
+            let dbUser = data[0].username;
+            let dbPass = data[0].password;
+
+            if (dbUser === user && dbPass === pass) {
+                req.session.username = dbUser;
+                console.log('Successfully logged in!');
+
+                res.writeHead(302, {
+                    'Location': '/'
+                });
+
+                res.end();
+            } else {
+                console.log('Your username or password is incorrect. Please try again.');
+                res.writeHead(302, {
+                    'Location': '/login'
+                });
+                res.end();
+            }
         }
     });
 }
