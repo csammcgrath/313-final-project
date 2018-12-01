@@ -13,7 +13,7 @@ function loginUser(req, res, pool) {
         if (!data[0]) {
             console.log('Your username or password is incorrect. Please try again');
             res.writeHead(302, {
-                'Location': './public/home.html'
+                'Location': '/login'
             });
             res.end();
         }
@@ -35,7 +35,7 @@ function loginUser(req, res, pool) {
         } else {
             console.log('Your username or password is incorrect. Please try again');
             res.writeHead(302, {
-                'Location': './public/home.html'
+                'Location': '/login'
             });
             res.end();
         }
