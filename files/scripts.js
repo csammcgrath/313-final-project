@@ -42,6 +42,34 @@ function loginUser(req, res, pool) {
     });
 }
 
+function signOutUser(req, res) {
+    if (!req.session.username) {
+        res.writeHead(302, {
+            'Location': '/'
+        });
+
+        res.end();
+    } else {
+        req.session.destroy((err) => {
+            if (err) {
+                console.log('ERROR: ', err);
+
+                res.writeHead(302, {
+                    'Location': '/'
+                });
+
+                res.end();
+            }
+
+            res.writeHead(302, {
+                'Location': '/'
+            });
+
+            res.end();
+        });
+    }
+}
+
 function queryDatabase(req, res, pool, callback) {
     let username = req.body.user;
     let password = req.body.pass;
@@ -63,5 +91,6 @@ function queryDatabase(req, res, pool, callback) {
 
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    signOutUser
 }
