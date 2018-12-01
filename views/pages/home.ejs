@@ -33,10 +33,13 @@
                         </li>
                     <% } else { %>
                         <li class='nav-item active'>
-                            <a class='nav-link'>Welcome, <% sessionVar %></a>
+                            <a class='nav-link'>Welcome, <%= sessionVar %></a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Sign Out</a>
                         </li>
                     <% } %>
                 </ul>
