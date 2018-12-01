@@ -19,7 +19,7 @@ function loginUser(req, res, pool) {
         }
 
         let user = req.body.user;
-        let pass = req.body.user;
+        let pass = req.body.pass;
         let dbUser = data[0].username;
         let dbPass = data[0].password;
 
