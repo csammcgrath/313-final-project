@@ -23,11 +23,8 @@ function loginUser(req, res, pool) {
         let dbUser = data[0].username;
         let dbPass = data[0].password;
 
-        console.log('User stuff', user, pass);
-        console.log('DB stuff: ', dbUser, dbPass);
-
         if (dbUser === user && dbPass === pass) {
-            // req.sessions.username = dbUser;
+            req.session.username = dbUser;
             console.log('Successfully logged in!');
 
             res.writeHead(302, {
@@ -42,7 +39,6 @@ function loginUser(req, res, pool) {
             });
             res.end();
         }
-        // res.json({success: true, data: data[0]})
     });
 }
 
