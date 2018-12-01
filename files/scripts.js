@@ -10,7 +10,36 @@ function loginUser(req, res, pool) {
             res.json({success: false});
         }
 
-        res.json({success: true, data: data[0]})
+        if (!data[0]) {
+            alert('Your username or password is incorrect. Please try again');
+            res.writeHead(302, {
+                'Location': './public/home.html'
+            });
+            res.end();
+        }
+
+        let user = req.body.user;
+        let pass = req.body.user;
+        let dbUser = data[0].username;
+        let dbPass = data[0].password;
+
+        if (dbUser === user && dbPass === pass) {
+            req.sessions.username = dbUser;
+            alert('Successfully logged in!');
+
+            res.writeHead(302, {
+                'Location': '/'
+            });
+
+            res.end();
+        } else {
+            alert('Your username or password is incorrect. Please try again');
+            res.writeHead(302, {
+                'Location': './public/home.html'
+            });
+            res.end();
+        }
+        // res.json({success: true, data: data[0]})
     });
 }
 
