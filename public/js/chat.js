@@ -19,7 +19,6 @@ $(document).ready(() => {
     });
 
     socket.on('new_message', (data) => {
-        console.log(`Username from <p>: `, $('#usernameWhole').innerText())
         $('#chatroom').append(`\
             <li class="left clearfix">\
                 <div class="chat-body clearfix">\
