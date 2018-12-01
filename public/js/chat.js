@@ -13,7 +13,8 @@ $(document).ready(() => {
         e.preventDefault();
 
         socket.emit('new_message', { 
-            message: $('#userInput').val()
+            message: $('#userInput').val(),
+            username: $('#usernameWhole').innerText()
         });
         $('#userInput').val('');
         $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
@@ -21,17 +22,20 @@ $(document).ready(() => {
     });
 
     socket.on('new_message', (data) => {
-        $('#chatroom').append(`\
-            <li class="left clearfix">\
-                <div class="chat-body clearfix">\
-                    <div class="header">\
-                        <b>Anonymous</b><br>\
+        console.log('Data: ', data);
+        if (data.message !== '') {
+            $('#chatroom').append(`\
+                <li class="left clearfix">\
+                    <div class="chat-body clearfix">\
+                        <div class="header">\
+                            <b>Anonymous</b><br>\
+                        </div>\
+                        <p>\
+                            ${data.message}\
+                        </p>\
                     </div>\
-                    <p>\
-                        ${data.message}\
-                    </p>\
-                </div>\
-            </li >`
-        )
+                </li >`
+            )
+        }
     });
 });
