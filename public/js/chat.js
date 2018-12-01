@@ -24,6 +24,7 @@ $(document).ready(() => {
     });
 
     socket.on('new_message', (data) => {
+        console.log('Data: ', data);
         if (data.message !== '') {
             $('#chatroom').append(`\
                 <li class="left clearfix">\
