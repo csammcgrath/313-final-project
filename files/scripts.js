@@ -11,7 +11,8 @@ function loginUser(req, res, pool) {
         }
 
         if (data.length === 0) {
-            console.log('Your username or password is incorrect. Please try again');
+            //remove Not found in database portion when project is finished.
+            console.log('Your username or password is incorrect. Please try again. Not found in database...');
             res.writeHead(302, {
                 'Location': '/login'
             });
@@ -33,7 +34,7 @@ function loginUser(req, res, pool) {
 
             res.end();
         } else {
-            console.log('Your username or password is incorrect. Please try again');
+            console.log('Your username or password is incorrect. Please try again. Incorrect user/pass.');
             res.writeHead(302, {
                 'Location': '/login'
             });
