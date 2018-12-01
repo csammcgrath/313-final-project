@@ -10,7 +10,7 @@ function loginUser(req, res, pool) {
             res.json({success: false});
         }
 
-        if (!data[0]) {
+        if (!data) {
             console.log('Your username or password is incorrect. Please try again');
             res.writeHead(302, {
                 'Location': '/login'
