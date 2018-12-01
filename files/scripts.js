@@ -11,7 +11,7 @@ function loginUser(req, res, pool) {
         }
 
         if (!data[0]) {
-            alert('Your username or password is incorrect. Please try again');
+            console.log('Your username or password is incorrect. Please try again');
             res.writeHead(302, {
                 'Location': './public/home.html'
             });
@@ -25,7 +25,7 @@ function loginUser(req, res, pool) {
 
         if (dbUser === user && dbPass === pass) {
             req.sessions.username = dbUser;
-            alert('Successfully logged in!');
+            console.log('Successfully logged in!');
 
             res.writeHead(302, {
                 'Location': '/'
@@ -33,7 +33,7 @@ function loginUser(req, res, pool) {
 
             res.end();
         } else {
-            alert('Your username or password is incorrect. Please try again');
+            console.log('Your username or password is incorrect. Please try again');
             res.writeHead(302, {
                 'Location': './public/home.html'
             });
