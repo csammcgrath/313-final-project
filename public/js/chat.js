@@ -28,7 +28,7 @@ $(document).ready(() => {
                 <li class="left clearfix">\
                     <div class="chat-body clearfix">\
                         <div class="header">\
-                            <b>Anonymous</b><br>\
+                            <b>${data.username}</b><br>\
                         </div>\
                         <p>\
                             ${data.message}\
