@@ -59,8 +59,8 @@ function loginUser(req, res, pool) {
     });
 }
 
-function checkUsername(username, pool) {
-    getUsersDatabase(username, pool, (err, data) => {
+function checkUsername(usr, pool) {
+    getUsersDatabase(usr, pool, (err, data) => {
         if (err) {
             console.log(err);
             res.json({ success: false });
