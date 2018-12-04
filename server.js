@@ -5,7 +5,6 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const sharedsession = require("express-socket.io-session");
 
 const { Pool } = require('pg');
 
@@ -35,8 +34,6 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: true }
 }));
-
-io.use(sharedsession(session)); 
 
 //ROUTES
 //res.sendFile(path.join(__dirname, '/public/home.html'))
