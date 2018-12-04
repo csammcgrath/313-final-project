@@ -70,7 +70,7 @@ function checkUsername(username, pool) {
     });
 }
 
-function createUser(req, res, pool) {
+function createUserDatabase(req, res, pool) {
     let username = req.body.username;
     let checkFlag = checkUsername(username, pool);
 
