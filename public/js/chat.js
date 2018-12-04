@@ -12,14 +12,15 @@ $(document).ready(() => {
     $('#chatButton').click((e) => {
         e.preventDefault();
 
-        console.log(`Value: ${$('#userNameChat').val()}`);
-        socket.emit('new_message', { user: $('#userNameChat').val(), message: $('#userInput').val() });
+        let msg = $('#userInput').val();
+        let usr = $('#userNameChat').val();
+        socket.emit('new_message', { message: msg, user: usr });
         $('#userInput').val('');
         // $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
         return false;
     });
 
-    socket.on('new_message', ({username, message}) => {
+    socket.on('new_message', ({message, username}) => {
         // let username = $('#usernameWhole').html();
         // let username = $('#userNameChat').val();
         console.log(`Data obj: `, message, username);
