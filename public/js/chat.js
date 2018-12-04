@@ -21,7 +21,7 @@ $(document).ready(() => {
     socket.on('new_message', (data) => {
         // let username = $('#usernameWhole').html();
         // let username = $('#userNameChat').val();
-        console.log(`Data obj: ${data}`);
+        console.log(`Data obj: `, data);
 
         if (data.message !== '' && data.username) {
             $('#chatroom').append(`\
