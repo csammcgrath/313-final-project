@@ -91,7 +91,7 @@ function createUserDatabase(req, res, pool) {
                 res.json({ success: false });
             }
 
-            if (data.length === 0) {
+            if (data || data.length === 0) {
                 res.writeHead(302, {
                     'Location': '/registration'
                 });
@@ -173,7 +173,7 @@ function insertDatabase(req, res, pool, callback) {
     let username = req.body.user;
     let password = req.body.pass0;
 
-    let query = 'INSERT INTO users(username, password) VALUES $1, $2;';
+    let query = 'INSERT INTO users(username, password) VALUES ($1, $2)';
     let params = [username, password];
 
     pool.query(query, params, (err, results) => {
