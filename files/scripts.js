@@ -60,6 +60,7 @@ function loginUser(req, res, pool) {
 }
 
 function checkUsername(usr, pool) {
+    console.log('checkUsername: ', usr);
     getUsersDatabase(usr, pool, (err, data) => {
         if (err) {
             console.log(err);
@@ -72,6 +73,7 @@ function checkUsername(usr, pool) {
 
 function createUserDatabase(req, res, pool) {
     let usr = req.body.user;
+    console.log(`Username: ${usr}`);
     let checkFlag = checkUsername(usr, pool);
 
     if (checkFlag) {
@@ -171,7 +173,7 @@ function queryDatabase(req, res, pool, callback) {
 
 function insertDatabase(req, res, pool, callback) {
     let username = req.body.user;
-    let password = req.body.pass;
+    let password = req.body.pass0;
 
     let query = 'INSERT INTO users(username, password) VALUES $1, $2;';
     let params = [username, password];
