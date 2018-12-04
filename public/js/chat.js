@@ -14,7 +14,10 @@ $(document).ready(() => {
 
         let msg = $('#userInput').val();
         let usr = $('#userNameChat').val();
-        socket.emit('new_message', msg, usr);
+
+        console.log(`Message: `, msg, ` Type: ${typeof msg}`);
+        console.log(`Username: `, usr, ` Type: ${typeof usr}`);
+        socket.emit('new_message', { message: msg, username: usr });
         $('#userInput').val('');
         // $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
         return false;
