@@ -27,7 +27,8 @@ $(document).ready(() => {
     socket.on('new_message', (obj) => {
         // let username = $('#usernameWhole').html();
         // let username = $('#userNameChat').val();
-        let data = JSON.parse(obj);
+        // let data = JSON.parse(obj);
+        console.log(obj);
         console.log(`Data obj: `, data.message, data.username);
 
         if (data.message !== '' && data.username) {
