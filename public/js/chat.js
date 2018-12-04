@@ -22,11 +22,6 @@ $(document).ready(() => {
     });
 
     socket.on('new_message', (data) => {
-        // let username = $('#usernameWhole').html();
-        // let username = $('#userNameChat').val();
-        console.log(`Arguments`, message, username);
-        // console.log(`Data obj: `, data.message, data.username);
-
         if (data.message !== '' && data.username) {
             $('#chatroom').append(`\
                 <li class="left clearfix">\
