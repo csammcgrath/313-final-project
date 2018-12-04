@@ -5,6 +5,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const sharedsession = require("express-socket.io-session");
 
 const { Pool } = require('pg');
 
@@ -17,6 +18,7 @@ const pool = new Pool({
 
 const helpers = require('./files/scripts');
 
+//SERVER INITIALIZATION
 app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -24,13 +26,17 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//SESSION INITIALIZATION
 app.set('trust proxy', 1) // trust first proxy
+
 app.use(session({
   secret: 'tacocat',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: true }
 }));
+
+io.use(sharedsession(session)); 
 
 //ROUTES
 //res.sendFile(path.join(__dirname, '/public/home.html'))
@@ -42,13 +48,19 @@ app.post('/login-createUser', (req, res) => helpers.loginUser(req, res, pool));
 app.get('/registration', (req, res) => helpers.createUser(req, res));
 app.post('/registration-create', (req, res) => helpers.createUserDatabase(req, res, pool));
 
-//SOCKET IO
+//SOCKET IO STUFF
 io.on('connection', (socket) => {
-  console.log('An user has connected!');
-
-  socket.on('disconnect', () => {
-    console.log('An user has disconnected.');
+  socket.on('login', (usr) => {
+    socket.handshake.session.username = usr;
+    socket.handshake.session.save();
   });
+
+  socket.on('logout', (usr) => {
+    if (socket.handshake.session.userdata) {
+      delete socket.handshake.session.username;
+      socket.handshake.session.save();
+    }
+  });  
 
   socket.on('new_message', (data) => {
     console.log(`message: ${data.message}`);
@@ -57,5 +69,5 @@ io.on('connection', (socket) => {
   });
 });
 
-//SETUP LISTENER
+//LISTENER
 http.listen(PORT, () => console.log(`Listening on port ${PORT}`));
