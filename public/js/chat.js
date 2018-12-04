@@ -21,7 +21,7 @@ $(document).ready(() => {
         return false;
     });
 
-    socket.on('new_message', (message, username) => {
+    socket.on('new_message', (data) => {
         // let username = $('#usernameWhole').html();
         // let username = $('#userNameChat').val();
         console.log(`Arguments`, message, username);
