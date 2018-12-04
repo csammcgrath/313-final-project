@@ -18,7 +18,7 @@ $(document).ready(() => {
         console.log(`Message: `, msg, ` Type: ${typeof msg}`);
         console.log(`Username: `, usr, ` Type: ${typeof usr}`);
         console.log(`JSON: `, { message: msg, username: usr });
-        socket.emit('new_message', { message: msg, username: usr });
+        socket.send('new_message', JSON.stringify({ message: msg, username: usr }));
         $('#userInput').val('');
         // $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
         return false;
