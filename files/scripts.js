@@ -71,7 +71,7 @@ function checkUsername(usr, pool) {
 }
 
 function createUserDatabase(req, res, pool) {
-    let usr = req.body.username;
+    let usr = req.body.user;
     let checkFlag = checkUsername(usr, pool);
 
     if (checkFlag) {
