@@ -71,8 +71,8 @@ function checkUsername(usr, pool) {
 }
 
 function createUserDatabase(req, res, pool) {
-    let username = req.body.username;
-    let checkFlag = checkUsername(username, pool);
+    let usr = req.body.username;
+    let checkFlag = checkUsername(usr, pool);
 
     if (checkFlag) {
         console.log('Username already exists!');
