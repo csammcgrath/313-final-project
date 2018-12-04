@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="./stylesheets/main.css">
 </head>
 
@@ -31,6 +33,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/login">Login</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registration">Sign up</a>
+                        </li>
                     <% } else { %>
                         <li class='nav-item active'>
                             <a class='nav-link'>Welcome, <p id='usernameWhole' style="display:inline"><%= sessionVar %></p></a>
@@ -49,8 +54,19 @@
 
     <div class="container h-100" id="allChat">
         <div class="row align-items-center h-100">
-            <div class="col-md-8" id="ytplayer">
+            <div class="col-md-8" style="display:none" id="ytplayer">
 
+            </div>
+            <div class="col-md-8" id="ytPlayerIcon">
+                <img src="http://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg" height="360" width="640" /><br>
+                <div class="btn-group" style="float: left;">
+                    <button id="play" class="btn btn-outline-secondary mt-3 btn-lg"><i class="fas fa-play"></i></button>
+                    <button id="stop" class="btn btn-outline-secondary mt-3 btn-lg"><i class="fas fa-pause"></i></button>
+                    <!-- <div id="progressBar">
+                        <div id="line"></div>
+                        <div id="square"></div>
+                    </div> -->
+                </div>
             </div>
             <div class="col-md-4 mt-5" id="partialChat">
                 <div class="panel panel-primary">

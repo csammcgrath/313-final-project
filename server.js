@@ -39,6 +39,7 @@ app.get('/', (req, res) => res.render('pages/home', { sessionVar: req.session.us
 app.get('/login', (req, res) => helpers.renderLoginLogic(req, res));
 app.get('/login-signOut', (req, res) => helpers.signOutUser(req, res));
 app.post('/login-createUser', (req, res) => helpers.loginUser(req, res, pool));
+app.get('/registration', (req, res) => helpers.createUser(req, res));
 
 //SOCKET IO
 io.on('connection', (socket) => {

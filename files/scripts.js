@@ -1,5 +1,12 @@
 function createUser(req, res) {
-
+    if (req.session.username) {
+        res.writeHead(302, {
+            'Location': '/'
+        });
+        res.end();
+    } else {
+        res.render('pages/registration');
+    }
 }
 
 function renderLoginLogic(req, res) {
@@ -52,6 +59,51 @@ function loginUser(req, res, pool) {
     });
 }
 
+function checkUsername(username, pool) {
+    getUsersDatabase(username, pool, (err, data) => {
+        if (err) {
+            console.log(err);
+            res.json({ success: false });
+        }
+
+        return (data.length === 0) ? true : false;
+    });
+}
+
+function createUser(req, res, pool) {
+    let username = req.body.username;
+    let checkFlag = checkUsername(username, pool);
+
+    if (checkFlag) {
+        console.log('Username already exists!');
+
+        res.writeHead(302, {
+            'Location': '/registration'
+        });
+
+        res.end();
+    } else {
+        insertDatabase(req, res, pool, (err, data) => {
+            if (err) {
+                console.log(err);
+                res.json({ success: false });
+            }
+
+            if (data.length === 0) {
+                res.writeHead(302, {
+                    'Location': '/registration'
+                });
+                res.end();
+            } else {
+                res.writeHead(302, {
+                    'Location': '/'
+                });
+                res.end();
+            }
+        });
+    }
+}
+
 function signOutUser(req, res) {
     if (!req.session.username) {
         res.writeHead(302, {
@@ -80,6 +132,24 @@ function signOutUser(req, res) {
     }
 }
 
+function getUsersDatabase(username, pool, callback) {
+    let username = req.body.user;
+
+    let query = 'SELECT username FROM users where username = $1';
+    let params = [username];
+
+    pool.query(query, params, (err, results) => {
+        if (err) {
+            console.log(`ERR: ${err}`);
+            callback(err);
+        }
+
+        console.log('Results: ', JSON.stringify(results.rows));
+
+        callback(null, results.rows);
+    });
+}
+
 function queryDatabase(req, res, pool, callback) {
     let username = req.body.user;
     let password = req.body.pass;
@@ -94,6 +164,25 @@ function queryDatabase(req, res, pool, callback) {
         }
 
         console.log('Results: ', JSON.stringify(results.rows));
+
+        callback(null, results.rows);
+    });
+}
+
+function insertDatabase(req, res, pool, callback) {
+    let username = req.body.user;
+    let password = req.body.pass;
+
+    let query = 'INSERT INTO users(username, password) VALUES $1, $2;';
+    let params = [username, password];
+
+    pool.query(query, params, (err, results) => {
+        if (err) {
+            console.log(`ERR: ${err}`);
+            callback(err);
+        }
+
+        req.session.username = username;
 
         callback(null, results.rows);
     });
