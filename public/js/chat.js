@@ -14,13 +14,13 @@ $(document).ready(() => {
 
         let msg = $('#userInput').val();
         let usr = $('#userNameChat').val();
-        socket.emit('new_message', { message: msg, user: usr });
+        socket.emit('new_message', { message: msg }, { username: usr });
         $('#userInput').val('');
         // $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
         return false;
     });
 
-    socket.on('new_message', ({message, username}) => {
+    socket.on('new_message', ({message}, {username}) => {
         // let username = $('#usernameWhole').html();
         // let username = $('#userNameChat').val();
         console.log(`Data obj: `, message, username);
