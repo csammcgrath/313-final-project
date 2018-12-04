@@ -135,8 +135,6 @@ function signOutUser(req, res) {
 }
 
 function getUsersDatabase(username, pool, callback) {
-    let username = req.body.user;
-
     let query = 'SELECT username FROM users where username = $1';
     let params = [username];
 
