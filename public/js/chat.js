@@ -15,21 +15,17 @@ $(document).ready(() => {
         let msg = $('#userInput').val();
         let usr = $('#userNameChat').val();
 
-        console.log(`Message: `, msg, ` Type: ${typeof msg}`);
-        console.log(`Username: `, usr, ` Type: ${typeof usr}`);
-        console.log(`JSON: `, { message: msg, username: usr });
-        socket.send('new_message', JSON.stringify({ message: msg, username: usr }));
+        socket.send('new_message', msg, usr);
         $('#userInput').val('');
         // $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
         return false;
     });
 
-    socket.on('new_message', (obj) => {
+    socket.on('new_message', () => {
         // let username = $('#usernameWhole').html();
         // let username = $('#userNameChat').val();
-        // let data = JSON.parse(obj);
-        console.log(obj);
-        console.log(`Data obj: `, data.message, data.username);
+        console.log(`Arguments`, arguments);
+        // console.log(`Data obj: `, data.message, data.username);
 
         if (data.message !== '' && data.username) {
             $('#chatroom').append(`\
