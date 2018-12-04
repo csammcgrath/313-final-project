@@ -192,5 +192,6 @@ module.exports = {
     createUser,
     loginUser,
     signOutUser,
-    renderLoginLogic
+    renderLoginLogic,
+    createUserDatabase
 }
