@@ -47,22 +47,8 @@ app.post('/registration-create', (req, res) => helpers.createUserDatabase(req, r
 
 //SOCKET IO STUFF
 io.on('connection', (socket) => {
-  socket.on('login', (usr) => {
-    socket.handshake.session.username = usr;
-    socket.handshake.session.save();
-  });
-
-  socket.on('logout', (usr) => {
-    if (socket.handshake.session.userdata) {
-      delete socket.handshake.session.username;
-      socket.handshake.session.save();
-    }
-  });  
-
   socket.on('new_message', (data) => {
-    console.log(`message: ${data.message}`);
-
-    io.sockets.emit('new_message', { message: data.message });
+    io.sockets.emit('new_message', { message: data.message, username: data.username });
   });
 });
 

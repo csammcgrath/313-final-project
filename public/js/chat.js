@@ -15,16 +15,16 @@ $(document).ready(() => {
         let msg = $('#userInput').val();
         let usr = $('#userNameChat').val();
 
-        socket.emit('new_message', msg, usr);
+        socket.emit('new_message', { message: msg, username: usr});
         $('#userInput').val('');
         // $("#scrollbar").scrollTop($("#scrollbar")[0].scrollHeight);
         return false;
     });
 
-    socket.on('new_message', () => {
+    socket.on('new_message', (message, username) => {
         // let username = $('#usernameWhole').html();
         // let username = $('#userNameChat').val();
-        console.log(`Arguments`, arguments);
+        console.log(`Arguments`, message, username);
         // console.log(`Data obj: `, data.message, data.username);
 
         if (data.message !== '' && data.username) {
