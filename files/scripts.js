@@ -192,9 +192,7 @@ function queryDatabase(req, res, pool, callback) {
 function insertDatabase(req, res, pool, callback) {
     let username = req.body.user;
     let password = req.body.pass0;
-
-    console.log('Username: ', username);
-    console.log('Password: ', password);
+    let isMod = false;
 
     //hash password - bcrypt
     bcrypt.hash(password, 10, (err, hash) => {
@@ -203,8 +201,8 @@ function insertDatabase(req, res, pool, callback) {
             callback(err);
         }
 
-        let query = 'INSERT INTO users(username, password) VALUES ($1, $2)';
-        let params = [username, hash];
+        let query = 'INSERT INTO users(username, password, isMod) VALUES ($1, $2)';
+        let params = [username, hash, isMod];
 
         pool.query(query, params, (err, results) => {
             if (err) {
