@@ -164,6 +164,10 @@
             player.pauseVideo();
         }
 
+        function seekTo(time) {
+            player.seekTo(time);
+        }
+
         $('#playVideoBtn').click(e => {
             e.preventDefault();
             // playVideo();
@@ -192,6 +196,11 @@
             if (obj.state === 'play') {
                 console.log('Play button hit');
                 console.log(`Time: ${player.getCurrentTime()}`);
+
+                if (Math.abs(obj.time - player.getCurrentTime()) > 1) {
+                    seekTo(obj.time);
+                }
+
                 playVideo();
             } else if (obj.state === 'pause') {
                 console.log('Stop button hit');
