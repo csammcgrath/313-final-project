@@ -80,7 +80,7 @@ function checkUsername(usr, pool, callback) {
             callback(err);
         }
 
-        callback(null, (data.length === 0) ? true : false);
+        callback(null, (data.length === 0) ? false : true);
     });
 }
 
