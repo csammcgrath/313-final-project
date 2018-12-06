@@ -88,6 +88,7 @@ function createUserDatabase(req, res, pool) {
     let usr = req.body.user;
     console.log(`Username: ${usr}`);
     checkUsername(usr, pool, (err, checkFlag) => {
+        console.log(`Checkflag: `, checkFlag);
         if (err) {
             console.log('Error: ', err);
             res.json({ success: false });
