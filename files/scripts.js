@@ -41,22 +41,32 @@ function loginUser(req, res, pool) {
             let dbUser = data[0].username;
             let dbPass = data[0].password;
 
-            if (dbUser === user && dbPass === pass) {
-                req.session.username = dbUser;
-                console.log('Successfully logged in!');
+            bcrypt.compare(pass, dbPass, (err, results) => {
+                if (err) {
+                    console.log('Your username or password is incorrect. Please try again.');
+                    res.writeHead(302, {
+                        'Location': '/login'
+                    });
+                    res.end();
+                }
 
-                res.writeHead(302, {
-                    'Location': '/'
-                });
+                if (dbUser === user && results) {
+                    req.session.username = dbUser;
+                    console.log('Successfully logged in!');
 
-                res.end();
-            } else {
-                console.log('Your username or password is incorrect. Please try again.');
-                res.writeHead(302, {
-                    'Location': '/login'
-                });
-                res.end();
-            }
+                    res.writeHead(302, {
+                        'Location': '/'
+                    });
+
+                    res.end();
+                } else {
+                    console.log('Your username or password is incorrect. Please try again.');
+                    res.writeHead(302, {
+                        'Location': '/login'
+                    });
+                    res.end();
+                }
+            });
         }
     });
 }
