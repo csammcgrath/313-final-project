@@ -59,6 +59,7 @@ function loginUser(req, res, pool) {
     });
 }
 
+//doesn't quite work yet.
 function checkUsername(usr, pool) {
     console.log('checkUsername: ', usr);
     getUsersDatabase(usr, pool, (err, data) => {

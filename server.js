@@ -50,6 +50,10 @@ io.on('connection', (socket) => {
   socket.on('new_message', (data) => {
     io.sockets.emit('new_message', { message: data.message, username: data.username });
   });
+
+  socket.on('video', obj => {
+    io.sockets.emit('video', obj);
+  })
 });
 
 //LISTENER

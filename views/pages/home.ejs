@@ -60,12 +60,12 @@
                 </div>
                 <div class="col-md-12" id="ytPlayerIcon">
                     <div class="btn-group" style="display: flex;">
-                        <button id="playVideo" class="btn btn-outline-secondary mt-3 btn-lg"><i class="fas fa-play"></i></button>
-                        <button id="stopVideo" class="btn btn-outline-secondary mt-3 btn-lg"><i class="fas fa-pause"></i></button>
+                        <button id="playVideoBtn" class="btn btn-outline-secondary mt-3 btn-lg"><i class="fas fa-play"></i></button>
+                        <button id="stopVideoBtn" class="btn btn-outline-secondary mt-3 btn-lg"><i class="fas fa-pause"></i></button>
                         <!-- <div id="progressBar">
-                                        <div id="line"></div>
-                                        <div id="square"></div>
-                                    </div> -->
+                                <div id="line"></div>
+                                <div id="square"></div>
+                            </div> -->
                         <div class="col-md-10">
                             <div class="row float-right">
                                 <div class="input-group mt-4">
@@ -114,8 +114,6 @@
     <script>
         //expose the io object global
         var socket = io();
-    </script>
-    <script>
         // Load the IFrame Player API code asynchronously.
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/player_api";
@@ -134,9 +132,73 @@
                     controls: 0,
                     disablekb: 1,
                     rel: 0,
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
                 }
             });
         }
+
+        // 4. The API will call this function when the video player is ready.
+        function onPlayerReady(event) {
+
+}
+
+        // 5. The API calls this function when the player's state changes.
+        //    The function indicates that when playing a video (state=1),
+        //    the player should play for six seconds and then stop.
+        var done = false;
+        function onPlayerStateChange(event) {
+            // if (event.data == YT.PlayerState.PLAYING && !done) {
+            //     setTimeout(stopVideo, 6000);
+            //     done = true;
+            // }
+        }
+
+        function playVideo() {
+            player.playVideo();
+        }
+
+        function stopVideo() {
+            player.pauseVideo();
+        }
+
+        $('#playVideoBtn').click(e => {
+            e.preventDefault();
+            // playVideo();
+            let videoData = {
+                state: 'play',
+                time: player.getCurrentTime()
+            }
+
+            socket.emit('video', videoData);
+        });
+
+        $('#stopVideoBtn').click(e => {
+            e.preventDefault();
+
+            
+            // stopVideo();
+            let videoData = {
+                state: 'pause',
+                time: player.getCurrentTime()
+            }
+
+            socket.emit('video', videoData);
+        });
+
+        socket.on('video', obj => {
+            if (obj.state === 'play') {
+                console.log('Play button hit');
+                console.log(`Time: ${player.getCurrentTime()}`);
+                playVideo();
+            } else if (obj.state === 'pause') {
+                console.log('Stop button hit');
+                console.log(`Time: ${player.getCurrentTime()}`);
+                stopVideo();
+            }
+        })
     </script>
     <script src="js/chat.js"></script>
 </body>
