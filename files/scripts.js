@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 function createUser(req, res) {
     if (req.session.username) {
         res.writeHead(302, {
@@ -174,18 +176,26 @@ function insertDatabase(req, res, pool, callback) {
     let username = req.body.user;
     let password = req.body.pass0;
 
-    let query = 'INSERT INTO users(username, password) VALUES ($1, $2)';
-    let params = [username, password];
-
-    pool.query(query, params, (err, results) => {
+    //hash password - bcrypt
+    bcrypt.hash(password, 10, (err, hash) => {
         if (err) {
-            console.log(`ERR: ${err}`);
+            console.log('Error: ', err);
             callback(err);
         }
 
-        req.session.username = username;
+        let query = 'INSERT INTO users(username, password) VALUES ($1, $2)';
+        let params = [username, hash];
 
-        callback(null, results.rows);
+        pool.query(query, params, (err, results) => {
+            if (err) {
+                console.log(`ERR: ${err}`);
+                callback(err);
+            }
+
+            req.session.username = username;
+
+            callback(null, results.rows);
+        });
     });
 }
 
