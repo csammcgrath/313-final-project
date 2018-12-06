@@ -193,6 +193,9 @@ function insertDatabase(req, res, pool, callback) {
     let username = req.body.user;
     let password = req.body.pass0;
 
+    console.log('Username: ', username);
+    console.log('Password: ', password);
+
     //hash password - bcrypt
     bcrypt.hash(password, 10, (err, hash) => {
         if (err) {
