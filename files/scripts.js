@@ -72,52 +72,56 @@ function loginUser(req, res, pool) {
 }
 
 //doesn't quite work yet.
-function checkUsername(usr, pool) {
+function checkUsername(usr, pool, callback) {
     console.log('checkUsername: ', usr);
     getUsersDatabase(usr, pool, (err, data) => {
         if (err) {
             console.log(err);
-            res.json({ success: false });
+            callback(err);
         }
 
-        console.log('Data: ', data);
-        return (data.length === 0) ? true : false;
+        callback(null, (data.length === 0) ? true : false);
     });
 }
 
 function createUserDatabase(req, res, pool) {
     let usr = req.body.user;
     console.log(`Username: ${usr}`);
-    let checkFlag = checkUsername(usr, pool);
+    checkUsername(usr, pool, (err, checkFlag) => {
+        if (err) {
+            console.log('Error: ', err);
+            res.json({ success: false });
+        }
 
-    if (checkFlag) {
-        console.log('Username already exists!');
+        if (checkFlag) {
+            console.log('Username already exists!');
 
-        res.writeHead(302, {
-            'Location': '/registration'
-        });
+            res.writeHead(302, {
+                'Location': '/registration'
+            });
 
-        res.end();
-    } else {
-        insertDatabase(req, res, pool, (err, data) => {
-            if (err) {
-                console.log(err);
-                res.json({ success: false });
-            }
+            res.end();
+        } else {
+            insertDatabase(req, res, pool, (err, data) => {
+                if (err) {
+                    console.log(err);
+                    res.json({ success: false });
+                }
 
-            if (data || data.length === 0) {
-                res.writeHead(302, {
-                    'Location': '/registration'
-                });
-                res.end();
-            } else {
-                res.writeHead(302, {
-                    'Location': '/'
-                });
-                res.end();
-            }
-        });
-    }
+                if (data || data.length === 0) {
+                    res.writeHead(302, {
+                        'Location': '/registration'
+                    });
+                    res.end();
+                } else {
+                    res.writeHead(302, {
+                        'Location': '/'
+                    });
+                    res.end();
+                }
+            });
+        }
+    }); 
 }
 
 function signOutUser(req, res) {
