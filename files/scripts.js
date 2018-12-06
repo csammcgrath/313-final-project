@@ -80,6 +80,7 @@ function checkUsername(usr, pool) {
             res.json({ success: false });
         }
 
+        console.log('Data: ', data);
         return (data.length === 0) ? true : false;
     });
 }
