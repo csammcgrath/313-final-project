@@ -110,14 +110,17 @@
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script> -->
     <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         //expose the io object global
         var socket = io();
+
         // Load the IFrame Player API code asynchronously.
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/player_api";
@@ -214,6 +217,26 @@
             socket.emit('video', obj);
 
             console.log(updateTime);
+        });
+
+        //draggable
+        $('#square').draggable({
+            axis: 'x',
+            containment: '#line',
+            drag: e => {
+                let offset = $('#square').offset();
+
+                let updateTime = (e.pageX - offset.left) / 445 * player.getDuration();
+
+                let obj = {
+                    state: 'play',
+                    time: updateTime
+                };
+
+                socket.emit('video', obj);
+
+                console.log(`New time: `, updateTime);
+            }
         });
 
         socket.on('video', obj => {
