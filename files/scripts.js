@@ -109,6 +109,7 @@ function createUserDatabase(req, res, pool) {
                     res.json({ success: false });
                 }
 
+                console.log(`Data: `, data);
                 if (data || data.length === 0) {
                     res.writeHead(302, {
                         'Location': '/registration'
