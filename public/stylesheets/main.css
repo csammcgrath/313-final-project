@@ -35,18 +35,21 @@
 #progressBar {
     width: 100%;
     float: left;
-    margin-top: 50%;
 }
 
 #line {
-    border-style: solid;
-    position: relative;
-    border-width: 1px;
-    width: 70%;
-    margin-left: 18%;
-    top: 50%;
+    position: absolute;
+    top: 61%;
+    border: 1px solid black;
+    width: 100%;
+    z-index: 0;
 }
 
 #square {
-
+    position: absolute;
+    top: 48%;
+    z-index: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
 }
