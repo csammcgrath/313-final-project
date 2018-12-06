@@ -201,7 +201,7 @@ function insertDatabase(req, res, pool, callback) {
             callback(err);
         }
 
-        let query = 'INSERT INTO users(username, password, isMod) VALUES ($1, $2)';
+        let query = 'INSERT INTO users(username, password, isMod) VALUES ($1, $2, $3)';
         let params = [username, hash, isMod];
 
         pool.query(query, params, (err, results) => {
