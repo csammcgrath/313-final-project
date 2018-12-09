@@ -223,10 +223,10 @@
 
                 //get info from the api
                 $.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoLink}&key=${apiKey}&part=snippet`, (data) => {
-                    console.log(data);
+                    let shortTitle = data.items[0].snippet.title.str(0, 8);
                     $('#movieList').append(`
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            ${data.items[0].snippet.title}
+                            ${shortTitle}
                         </li>
                     `)
                 });
