@@ -53,7 +53,11 @@ io.on('connection', (socket) => {
 
   socket.on('video', obj => {
     io.sockets.emit('video', obj);
-  })
+  });
+
+  socket.on('videoList', obj => {
+    io.sockets.emit('videoList', obj);
+  });
 });
 
 //LISTENER
