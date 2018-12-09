@@ -213,12 +213,15 @@
         $('#addVideoBtn').click(e => {
             e.preventDefault();
 
-            let videoLink = youtube_parser($('#videoLink').val());
+            let videoLink = $('#videoLink').val();
 
             let rgx = /^(https?\:\/\/)?((www\.)?youtube\.com|youtu\.?be)\/.+$/g;
 
             if (rgx.test(videoLink)) {
-                //add it to youtube
+                //we know it is a youtube link so let's grab the video id from the link and make an api call
+                videoLink = youtube_parser(videoLink);
+
+                //get info from the api
                 $.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoLink}&key=${apiKey}&part=snippet`, (data) => {
                     console.log(data);
                     $('#movieList').append(`
