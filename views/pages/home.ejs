@@ -297,6 +297,7 @@
         });
 
         socket.on('videoList', obj => {
+            console.log('Obj: ', obj);
             let num = $('#movieList li').length - 1;
             $('#movieList').append(`
                 <li id="videoInfo${num}" class="list-group-item d-flex justify-content-between align-items-center">
