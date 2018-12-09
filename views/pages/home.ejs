@@ -296,15 +296,15 @@
             }
         });
 
-        socket.on('videoList', obj => {
-            console.log('Obj: ', obj);
-            $('#movieList').append(`
-                <li id="videoInfo${$('#movieList li').length - 1}" class="list-group-item d-flex justify-content-between align-items-center">
-                    <input id="videoInfo" type="hidden" value="<%= ${obj.deets} %>" />
-                    ${obj.title}
-                </li>
-            `);
-        });
+        // socket.on('videoList', obj => {
+        //     console.log('Obj: ', obj);
+        //     $('#movieList').append(`
+        //         <li id="videoInfo${$('#movieList li').length - 1}" class="list-group-item d-flex justify-content-between align-items-center">
+        //             <input id="videoInfo" type="hidden" value="<%= ${obj.deets} %>" />
+        //             ${obj.title}
+        //         </li>
+        //     `);
+        // });
     </script>
     <script src="js/chat.js"></script>
 </body>
