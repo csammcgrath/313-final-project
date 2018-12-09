@@ -56,7 +56,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('videoList', obj => {
-    console.log('obj emit', obj);
     io.sockets.emit('videoList', obj);
   });
 });
