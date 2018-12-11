@@ -270,7 +270,7 @@
 
             let os = $('#line').offset();
             
-            let updateTime = (e.pageX - os.left) / 445 * player.getDuration();
+            let updateTime = (e.pageX - os.left) / 465 * player.getDuration();
 
             let obj = {
                 state: 'play',
@@ -287,7 +287,7 @@
             drag: e => {
                 let offset = $('#square').offset();
 
-                let updateTime = (e.pageX - offset.left) / 445 * player.getDuration();
+                let updateTime = (e.pageX - offset.left) / 465 * player.getDuration();
 
                 let obj = {
                     state: 'play',
