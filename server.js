@@ -46,7 +46,12 @@ app.get('/registration', (req, res) => helpers.createUser(req, res));
 app.post('/registration-create', (req, res) => helpers.createUserDatabase(req, res, pool));
 
 //SOCKET IO STUFF
-io.on('connection', (socket) => {
+io.on('connection', socket => {
+  // io.of('/').clients((error, clients) => {
+  //   if (error) throw error;
+  //   console.log(clients); // => [PZDoMHjiu8PYfRiKAAAF, Anw2LatarvGVVXEIAAAD]
+  // });
+
   socket.on('new_message', (data) => {
     io.sockets.emit('new_message', { message: data.message, username: data.username });
   });

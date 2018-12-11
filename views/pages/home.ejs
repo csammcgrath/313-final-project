@@ -127,6 +127,8 @@
     <script>
         //expose the io object global
         var socket = io();
+        var queue = []; //
+
         const apiKey = 'AIzaSyC0ceLDZ-7tIf5Ba5SvqVI8gLYq-1rp7ks'; //restricted to only my website to use the YT api. nice try :)
 
         // Load the IFrame Player API code asynchronously.
@@ -161,8 +163,26 @@
         }
 
         // 5. The API calls this function when the player's state changes.
-        var done = false;
-        function onPlayerStateChange(event) {}
+        function onPlayerStateChange(event) {
+            if (event.data === 0 && queue.length > 0) {
+                let movieObj = queue[0]; //save state
+                queue.splice(0, 1); //update queue
+
+                player.loadVideoById(movieObj.id, 0);
+
+                $('#movieList').empty();
+
+                queue.forEach(item => {
+                    $('#movieList').append(`
+                        <li id="videoInfo" class="list-group-item d-flex justify-content-between align-items-center">
+                            ${item.snippet.title.substr(0, 25)}
+                        </li>
+                    `);
+                });
+
+                io.socket.emit('videoList', queue);
+            }
+        }
 
         function playVideo() {
             player.playVideo();
@@ -187,6 +207,14 @@
                 sq.css('left', `${frac}%`);
             }, 250);
         }
+
+        $('#videoLink').keyup(e => {
+            e.preventDefault();
+
+            if (e.keyCode === 13) {
+                $('#addVideoBtn').click();
+            }
+        }); 
 
         $('#playVideoBtn').click(e => {
             e.preventDefault();
@@ -222,17 +250,10 @@
                 videoLink = youtube_parser(videoLink);
 
                 //get info from the api
-                $.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoLink}&key=${apiKey}&part=snippet`, (data) => {
-                    let shortTitle = data.items[0].snippet.title.substr(0, 25);
+                $.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoLink}&key=${apiKey}&part=snippet`, data => {
+                    queue.push(data.items[0]);
 
-                    let obj = {
-                        title: shortTitle,
-                        deets: data.items[0]
-                    }
-
-                    socket.emit('videoList', obj);
-
-                    console.log('Obj main: ', obj);
+                    socket.emit('videoList', queue);
                 });
             }
         });
@@ -257,8 +278,6 @@
             };
 
             socket.emit('video', obj);
-
-            console.log(updateTime);
         });
 
         //draggable
@@ -276,36 +295,32 @@
                 };
 
                 socket.emit('video', obj);
-
-                console.log(`New time: `, updateTime);
             }
         });
 
         socket.on('video', obj => {
             if (obj.state === 'play') {
-                console.log('Play button hit');
-                console.log(`Time: ${player.getCurrentTime()}`);
-
                 if (Math.abs(obj.time - player.getCurrentTime()) > 1) {
                     seekTo(obj.time);
                 }
 
                 playVideo();
             } else if (obj.state === 'pause') {
-                console.log('Stop button hit');
-                console.log(`Time: ${player.getCurrentTime()}`);
                 stopVideo();
             }
         });
 
         socket.on('videoList', obj => {
-            let num = $('#movieList li').length - 1;
-            $('#movieList').append(`
-                <li id="videoInfo${num}" class="list-group-item d-flex justify-content-between align-items-center">
-                    <input id="videoInfo" type="hidden" value="${obj.deets}" />
-                    ${obj.title}
-                </li>
-            `);
+            queue = obj;
+            $('#movieList').empty();
+
+            obj.forEach(item => {
+                $('#movieList').append(`
+                    <li id="videoInfo" class="list-group-item d-flex justify-content-between align-items-center">
+                        ${item.snippet.title.substr(0, 25)}
+                    </li>
+                `);
+            });
         });
     </script>
     <script src="js/chat.js"></script>
